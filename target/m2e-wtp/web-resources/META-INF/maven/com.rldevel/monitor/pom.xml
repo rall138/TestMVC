@@ -142,7 +142,7 @@
 		</dependency>  		
   		
   </dependencies>
-  
+  <!-- 
  <build>
  	<plugins>
           <plugin>
@@ -154,7 +154,7 @@
                    <target>1.6</target>
                </configuration>
            </plugin>
-			<!-- Para generar auto-deploy del war -->
+
 			<plugin>
                 <groupId>org.codeartisans.asadmin</groupId>
                 <artifactId>asadmin-maven-plugin</artifactId>
@@ -171,6 +171,6 @@
                 </configuration>
             </plugin>           
  	</plugins>
- </build>
+ </build> -->
    
 </project>
