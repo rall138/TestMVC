@@ -30,16 +30,10 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
     <!-- Session Factory Declaration -->
     <bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="DataSource" />
-<!--         <property name="packagesToScan"> -->
-<!--         	<list> -->
-<!--         		<value>com.rldevel.Entities</value> -->
-<!--         	</list> -->
-<!--         </property> -->
-        
         <property name="annotatedClasses">
             <list>
-                <value>com.rldevel.Entities.Estudiante</value>
-                <value>com.rldevel.Entities.Cuotas</value>
+            	<value>com.rldevel.Entities.Articulo</value>
+            	<value>com.rldevel.Entities.Cliente</value>
             </list>
         </property>
         <property name="hibernateProperties">

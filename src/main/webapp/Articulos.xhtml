@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+	<h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<p:commandButton id="newArticulo" update=":form:detailArticuloAtributtes" value="Agregar" icon="ui-icon-plus" 
+				oncomplete="PF('detailArticulo').show()" actionListener="#{articuloMB.clearArticulo}" >
+	        	<f:setPropertyActionListener value="insert" target="#{articuloMB.mode}" />			
+			</p:commandButton>
+				
+	        <p:dataTable id="tablaArticulos" var="articulo" value="#{articuloMB.articulos}" >
+	        	<p:column headerText="Id">
+	        		<h:outputText value="#{articulo.id}" />
+	        	</p:column>
+	        	<p:column headerText="Marca">
+	        		<h:outputText value="#{articulo.marca}" />
+	        	</p:column>
+	        	<p:column headerText="Nombre">
+	        		<h:outputText value="#{articulo.nombre}" />
+	        	</p:column>
+	        	<p:column headerText="Número de serie">
+	        		<h:outputText value="#{articulo.numeroSerie}" />
+	        	</p:column>
+	        	
+	        	<p:column headerText="Modificar">
+	        		<p:commandButton update=":form:detailArticuloAtributtes" title="Modificar" icon="ui-icon-pencil" 
+	        			oncomplete="PF('detailArticulo').show()">
+						<f:setPropertyActionListener value="#{articulo}" target="#{articuloMB.selectedArticulo}" />
+	        			<f:setPropertyActionListener value="update" target="#{articuloMB.mode}" />
+	        		</p:commandButton>
+	        	</p:column>
+
+	        	<p:column headerText="Eliminar">
+	        		<p:commandButton update=":form:detailArticuloAtributtes" title="Eliminar" icon="ui-icon-closethick" 
+	        			oncomplete="PF('detailArticulo').show()">
+						<f:setPropertyActionListener value="#{articulo}" target="#{articuloMB.selectedArticulo}" />
+	        			<f:setPropertyActionListener value="delete" target="#{articuloMB.mode}" />
+	        		</p:commandButton>
+	        	</p:column>
+	        	
+	        </p:dataTable>
+	        
+	        <!-- REGISTER DIALOG -->
+	        <p:dialog header="Detalle de articulo " 
+	        		widgetVar="detailArticulo" modal="true" showEffect="fade" resizable="false">
+	        		
+				<!-- Por medio de este id primefaces actualiza el con el puto update del commandButton del datatable -->	        		
+	        	<p:outputPanel id="detailArticuloAtributtes"> 
+	        		<p:panelGrid columns="2" >
+
+	        			<h:outputLabel id="lblMarca" for="txtMarca" value="Marca" />
+	        			<p:inputText id="txtMarca" value="#{articuloMB.selectedArticulo.marca}" 
+	        				readonly="#{articuloMB.mode == 'delete'}" />
+	        			
+	        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
+	        			<p:inputText id="txtNombre" value="#{articuloMB.selectedArticulo.nombre}" 
+	        				readonly="#{articuloMB.mode == 'delete'}" />
+
+	        			<h:outputLabel id="lblNumeroSerie" for="txtNumeroSerie" value="Número de serie" />
+	        			<p:inputText id="txtNumeroSerie" value="#{articuloMB.selectedArticulo.numeroSerie}" 
+	        				readonly="#{articuloMB.mode == 'delete'}" />
+
+	        			<h:outputLabel id="lblDiagnostico" for="txtDiagnostico" value="Diagnóstico" />
+	        			<p:inputTextarea id="txtDiagnostico" value="#{articuloMB.selectedArticulo.diagnostico}" 
+	        				readonly="#{articuloMB.mode == 'delete'}" />
+
+	        			<h:outputLabel id="lblComentario" for="txtComentario" value="Comentario" />
+	        			<p:inputTextarea id="txtComentario" value="#{articuloMB.selectedArticulo.comentario}" 
+	        				readonly="#{articuloMB.mode == 'delete'}" />
+
+						<p:panelGrid columns="2" >
+		        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{articuloMB.dialogConfirm}" 
+		        				update=":form:tablaArticulos" oncomplete="PF('detailArticulo').hide()" />
+		        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailArticulo').hide()" />
+		        		</p:panelGrid>
+
+	        		</p:panelGrid>
+	        		
+	        	</p:outputPanel>
+	        	
+	        </p:dialog>
+	        
+		</h:form>
+	</h:body>
+</html>

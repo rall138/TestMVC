@@ -1,5 +1,7 @@
 package com.rldevel.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +22,19 @@ public class ArticuloService {
 		this.articulodao = articulodao;
 	}
 	
-	public void insertArticulo(Articulo articulo){
-		articulodao.insertArticulo(articulo);
+	public boolean insertArticulo(Articulo articulo){
+		return articulodao.insertArticulo(articulo);
 	}
 	
-	public void updateArticulo(Articulo articulo){
-		articulodao.updateArticulo(articulo);
+	public boolean updateArticulo(Articulo articulo){
+		return articulodao.updateArticulo(articulo);
 	}
 	
-	public void deleteArticulo(Articulo articulo){
-		articulodao.deleteArticulo(articulo);
+	public boolean deleteArticulo(Articulo articulo){
+		return articulodao.deleteArticulo(articulo);
+	}
+	
+	public List<Articulo> getArticulos(){
+		return articulodao.getArticulos();
 	}
 }

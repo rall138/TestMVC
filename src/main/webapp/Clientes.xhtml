@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    	<h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<p:commandButton id="newCliente" update=":form:detailClienteAtributtes" value="Agregar" icon="ui-icon-plus" 
+				oncomplete="PF('detailCliente').show()" actionListener="#{clienteMB.clearCliente}" >
+	        	<f:setPropertyActionListener value="insert" target="#{clienteMB.mode}" />			
+			</p:commandButton>
+    
+			<p:dataTable id="tablaClientes" var="cliente" value="#{clienteMB.clientes}" >
+	        	<p:column headerText="Id">
+	        		<h:outputText value="#{cliente.id}" />
+	        	</p:column>
+	        	<p:column headerText="Nombre">
+	        		<h:outputText value="#{cliente.nombre}" />
+	        	</p:column>
+	        	<p:column headerText="Teléfono">
+	        		<h:outputText value="#{cliente.telefono}" />
+	        	</p:column>
+	        	<p:column headerText="Contacto">
+	        		<h:outputText value="#{cliente.contacto}" />
+	        	</p:column>
+	        	
+	        	<p:column headerText="Modificar">
+	        		<p:commandButton update=":form:detailClienteAtributtes" title="Modificar" icon="ui-icon-pencil" 
+	        			oncomplete="PF('detailCliente').show()">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" />
+	        			<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" />
+	        		</p:commandButton>
+	        	</p:column>
+
+	        	<p:column headerText="Eliminar">
+	        		<p:commandButton update=":form:detailClienteAtributtes" title="Modificar" icon="ui-icon-pencil" 
+	        			oncomplete="PF('detailCliente').show()">
+						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" />
+	        			<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" />
+	        		</p:commandButton>
+	        	</p:column>
+	        	
+	        </p:dataTable>
+    		
+	        <!-- REGISTER DIALOG -->
+	        <p:dialog header="Detalle de cliente " 
+	        		widgetVar="detailCliente" modal="true" showEffect="fade" resizable="false">
+	        		
+	        	<p:outputPanel id="detailClienteAtributtes"> 
+	        		<p:panelGrid columns="2" >
+
+	        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
+	        			<p:inputText id="txtNombre" value="#{clienteMB.selectedCliente.nombre}" 
+	        				readonly="#{clienteMB.mode == 'delete'}" />
+	        			
+	        			<h:outputLabel id="lblTelefono" for="txtTelefono" value="Teléfono" />
+	        			<p:inputText id="txtTelefono" value="#{clienteMB.selectedCliente.telefono}" 
+	        				readonly="#{clienteMB.mode == 'delete'}" />
+
+	        			<h:outputLabel id="lblContacto" for="txtContacto" value="Contacto" />
+	        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
+	        				readonly="#{clienteMB.mode == 'delete'}" />
+
+						<p:panelGrid columns="2" >
+		        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{clienteMB.dialogConfirm}" 
+		        				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" />
+		        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailCliente').hide()" />
+		        		</p:panelGrid>
+
+	        		</p:panelGrid>
+	        		
+	        	</p:outputPanel>
+	        	
+	        </p:dialog>    		
+    
+	    </h:form>
+    </h:body>
+    
+</html>

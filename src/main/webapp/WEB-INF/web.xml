@@ -15,6 +15,11 @@
   	<param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
   
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>excite-bike</param-value>
+  </context-param>
+  
   <!-- JSF Mapping -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
