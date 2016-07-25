@@ -1,15 +1,20 @@
 package com.rldevel.Entities;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="CLIENTE")
-public class Cliente {
+public class Cliente implements Serializable{
 
 	@Id
 	@Column(name="ID")
@@ -25,6 +30,9 @@ public class Cliente {
 	@Column(name="CONTACTO")
 	private String contacto;
 
+	@OneToMany
+	private List<Articulo> articulos;
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -51,6 +59,14 @@ public class Cliente {
 
 	public int getId() {
 		return id;
+	}
+
+	public List<Articulo> getArticulos() {
+		return articulos;
+	}
+
+	public void setArticulos(List<Articulo> articulos) {
+		this.articulos = articulos;
 	}
 
 }

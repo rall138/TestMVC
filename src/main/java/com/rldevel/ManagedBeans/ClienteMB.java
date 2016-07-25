@@ -20,7 +20,7 @@ public class ClienteMB implements Serializable{
 
 	@ManagedProperty(value="#{clienteservice}")	
 	private ClienteService clienteservice;
-	
+		
 	private String filteredNombre;
 	private List<Cliente> clientes;
 	private Cliente selectedCliente;
@@ -38,8 +38,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public List<Cliente> getClientes() {
-		clientes = clienteservice.getClientes(this.filteredNombre);
-		return clientes;
+		return this.clienteservice.getItemCollection();
 	}
 
 	public void setClientes(List<Cliente> clientes) {
@@ -82,14 +81,14 @@ public class ClienteMB implements Serializable{
 		if (mode.equalsIgnoreCase("insert")){
 			this.insertCliente();
 		}else if (mode.equalsIgnoreCase("update")){
-			this.updateCliente();
-		}else if (mode.equalsIgnoreCase("delete")){
-			this.deleteCliente();
+//			this.updateCliente();
+//		}else if (mode.equalsIgnoreCase("delete")){
+//			this.deleteCliente();
 		}
 	}
 
 	private void insertCliente() {
-		if (this.clienteservice.deleteCliente(this.selectedCliente)){
+		if (this.clienteservice.insert(this.selectedCliente)){
 			deployMessage("Cliente añadido con éxito");
 		}else{
 			deployMessage("Ha ocurrido un error al añadir el registro", 
@@ -97,23 +96,23 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
-	private void updateCliente() {
-		if (this.clienteservice.deleteCliente(this.selectedCliente)){
-			deployMessage("Cliente actualizado con éxito");
-		}else{
-			deployMessage("Ha ocurrido un error al actualizar el registro", 
-					FacesMessage.SEVERITY_ERROR);
-		}
-	}
-
-	private void deleteCliente() {
-		if (this.clienteservice.deleteCliente(this.selectedCliente)){
-			deployMessage("Cliente eliminado con éxito");
-		}else{
-			deployMessage("Ha ocurrido un error al eliminar el registro", 
-					FacesMessage.SEVERITY_ERROR);
-		}
-	}
+//	private void updateCliente() {
+//		if (this.clienteservice.update(this.selectedCliente)){
+//			deployMessage("Cliente actualizado con éxito");
+//		}else{
+//			deployMessage("Ha ocurrido un error al actualizar el registro", 
+//					FacesMessage.SEVERITY_ERROR);
+//		}
+//	}
+//
+//	private void deleteCliente() {
+//		if (this.clienteservice.delete(this.selectedCliente)){
+//			deployMessage("Cliente eliminado con éxito");
+//		}else{
+//			deployMessage("Ha ocurrido un error al eliminar el registro", 
+//					FacesMessage.SEVERITY_ERROR);
+//		}
+//	}
 
 	private void deployMessage(String strMessage){
 		FacesContext context = FacesContext.getCurrentInstance();

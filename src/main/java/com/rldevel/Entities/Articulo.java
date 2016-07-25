@@ -1,20 +1,28 @@
 package com.rldevel.Entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ARTICULO")
-public class Articulo {
+public class Articulo implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
 	private int id;
+	
+	@ManyToOne
+	@JoinColumn(name="CLIENTEID", nullable=false)
+	private Cliente cliente;
 
 	@Column(name="MARCA")
 	private String marca;
@@ -31,21 +39,28 @@ public class Articulo {
 	@Column(name="COMENTARIO")
 	private String comentario;
 	
-	public Articulo(){
-		
-	}
+	public Articulo(){}
 	
 	public Articulo(String marca, String nombre, String numeroSerie, 
-			String diagnostico, String comentario){
+			String diagnostico, String comentario, Cliente cliente){
 		this.marca = marca;
 		this.nombre = nombre;
 		this.numeroSerie = numeroSerie;
 		this.diagnostico = diagnostico;
 		this.comentario = comentario;
+		this.cliente = cliente;
 	}
 	
 	public int getId() {
 		return id;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public String getMarca() {

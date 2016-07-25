@@ -54,29 +54,36 @@
 	        <p:dialog header="Detalle de cliente " 
 	        		widgetVar="detailCliente" modal="true" showEffect="fade" resizable="false">
 	        		
-	        	<p:outputPanel id="detailClienteAtributtes"> 
-	        		<p:panelGrid columns="2" >
-
-	        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
-	        			<p:inputText id="txtNombre" value="#{clienteMB.selectedCliente.nombre}" 
-	        				readonly="#{clienteMB.mode == 'delete'}" />
-	        			
-	        			<h:outputLabel id="lblTelefono" for="txtTelefono" value="Teléfono" />
-	        			<p:inputText id="txtTelefono" value="#{clienteMB.selectedCliente.telefono}" 
-	        				readonly="#{clienteMB.mode == 'delete'}" />
-
-	        			<h:outputLabel id="lblContacto" for="txtContacto" value="Contacto" />
-	        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
-	        				readonly="#{clienteMB.mode == 'delete'}" />
-
-						<p:panelGrid columns="2" >
-		        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{clienteMB.dialogConfirm}" 
-		        				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" />
-		        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailCliente').hide()" />
-		        		</p:panelGrid>
-
-	        		</p:panelGrid>
-	        		
+	        	<p:outputPanel id="detailClienteAtributtes">
+	        		<p:tabView>
+	        			<p:tab id="tabGeneral">
+			        		<p:panelGrid columns="2" >
+		
+			        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
+			        			<p:inputText id="txtNombre" value="#{clienteMB.selectedCliente.nombre}" 
+			        				readonly="#{clienteMB.mode == 'delete'}" />
+			        			
+			        			<h:outputLabel id="lblTelefono" for="txtTelefono" value="Teléfono" />
+			        			<p:inputText id="txtTelefono" value="#{clienteMB.selectedCliente.telefono}" 
+			        				readonly="#{clienteMB.mode == 'delete'}" />
+		
+			        			<h:outputLabel id="lblContacto" for="txtContacto" value="Contacto" />
+			        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
+			        				readonly="#{clienteMB.mode == 'delete'}" />
+		
+								<p:panelGrid columns="2" >
+				        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{clienteMB.dialogConfirm}" 
+				        				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" />
+				        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailCliente').hide()" />
+				        		</p:panelGrid>
+		
+			        		</p:panelGrid>
+		        		</p:tab>
+		        		<p:tab id="tabArticulos">
+							<ui:include src="ArticulosDataTable.xhtml" />
+		        		</p:tab>
+					</p:tabView>
+						        		
 	        	</p:outputPanel>
 	        	
 	        </p:dialog>    		

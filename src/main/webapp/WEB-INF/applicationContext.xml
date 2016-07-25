@@ -32,6 +32,7 @@ http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
         <property name="dataSource" ref="DataSource" />
         <property name="annotatedClasses">
             <list>
+            	<value>com.rldevel.Entities.Operacion</value>
             	<value>com.rldevel.Entities.Articulo</value>
             	<value>com.rldevel.Entities.Cliente</value>
             </list>
