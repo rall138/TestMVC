@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @Table(name="ARTICULO")
 public class Articulo implements Serializable{
 
+	private static final long serialVersionUID = -911274213771748253L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
@@ -93,7 +95,4 @@ public class Articulo implements Serializable{
 	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
-	
-	
-	
 }

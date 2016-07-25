@@ -26,9 +26,9 @@ public class Operacion implements Serializable{
 
 	private static final long serialVersionUID = -5554843914909754397L;
 
-//	@Id
-//	@Column(name="TIPOOPERACION")
-//	private TipoOperacion tipoOperacion;
+	@Id
+	@Column(name="TIPOOPERACION")
+	private TipoOperacion tipoOperacion;
 	
 	@Id
 	@Column(name="FECHA_GENERACION")
@@ -42,14 +42,14 @@ public class Operacion implements Serializable{
 	
 	public Operacion(){}
 	
-//	@Enumerated(EnumType.STRING)
-//	public TipoOperacion getTipoOperacion() {
-//		return tipoOperacion;
-//	}
+	@Enumerated(EnumType.STRING)
+	public TipoOperacion getTipoOperacion() {
+		return tipoOperacion;
+	}
 
-//	public void setTipoOperacion(TipoOperacion tipoOperacion) {
-//		this.tipoOperacion = tipoOperacion;
-//	}
+	public void setTipoOperacion(TipoOperacion tipoOperacion) {
+		this.tipoOperacion = tipoOperacion;
+	}
 
 	public Date getFechaGeneracion() {
 		return fechaGeneracion;

@@ -15,6 +15,8 @@ import com.rldevel.Entities.Cliente;
 @Service("clienteservice")
 public class ClienteService implements Serializable{
 
+	private static final long serialVersionUID = 2892060095168512078L;
+
 	private ClienteDAO clientedao;
 
 	public ClienteService(){}
@@ -54,15 +56,7 @@ public class ClienteService implements Serializable{
 		cliente.getArticulos().add(art1);
 		cliente.getArticulos().add(art2);
 		cliente.getArticulos().add(art3);
-
-		Transaction transaction = null;
-		transaction = this.clientedao.getSessionFactory().getCurrentSession().beginTransaction();
-		this.clientedao.getSessionFactory().getCurrentSession().save(cliente);
-		for(Articulo articulo : cliente.getArticulos()){
-			this.clientedao.getSessionFactory().getCurrentSession().save(articulo);
-		}
-		transaction.commit();
-		return transaction.wasCommitted();
+		return this.getClientedao().insert(cliente);
 	}
 
 	public List<Cliente> getItemCollection() {

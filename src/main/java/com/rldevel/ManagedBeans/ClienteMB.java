@@ -88,8 +88,9 @@ public class ClienteMB implements Serializable{
 	}
 
 	private void insertCliente() {
+		System.out.println(this.selectedCliente.toString());
 		if (this.clienteservice.insert(this.selectedCliente)){
-			deployMessage("Cliente añadido con éxito");
+			deployMessage("Cliente generado exitosamente");
 		}else{
 			deployMessage("Ha ocurrido un error al añadir el registro", 
 					FacesMessage.SEVERITY_ERROR);
