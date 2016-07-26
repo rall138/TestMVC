@@ -56,7 +56,7 @@
 	        		
 	        	<p:outputPanel id="detailClienteAtributtes">
 	        		<p:tabView>
-	        			<p:tab id="tabGeneral">
+	        			<p:tab id="tabGeneral" title="Datos generales">
 			        		<p:panelGrid columns="2" >
 		
 			        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
@@ -79,7 +79,7 @@
 		
 			        		</p:panelGrid>
 		        		</p:tab>
-		        		<p:tab id="tabArticulos">
+		        		<p:tab id="tabArticulos" title="Articulos">
 							<ui:include src="ArticulosDataTable.xhtml" />
 		        		</p:tab>
 					</p:tabView>

@@ -5,10 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,14 +15,10 @@ public class Articulo implements Serializable{
 	private static final long serialVersionUID = -911274213771748253L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
+	@GeneratedValue
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name="CLIENTEID", nullable=false)
-	private Cliente cliente;
-
 	@Column(name="MARCA")
 	private String marca;
 
@@ -50,19 +43,10 @@ public class Articulo implements Serializable{
 		this.numeroSerie = numeroSerie;
 		this.diagnostico = diagnostico;
 		this.comentario = comentario;
-		this.cliente = cliente;
 	}
-	
+		
 	public int getId() {
 		return id;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 
 	public String getMarca() {

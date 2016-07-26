@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,7 +23,7 @@ public class Cliente implements Serializable{
 
 	@Id
 	@Column(name="ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue
 	private int id;
 	
 	@Column(name="NOMBRE")
@@ -32,12 +35,9 @@ public class Cliente implements Serializable{
 	@Column(name="CONTACTO")
 	private String contacto;
 
-	@OneToMany(cascade=javax.persistence.CascadeType.PERSIST)
-	private List<Articulo> articulos;
-	
-	public Cliente(){
-		articulos = new ArrayList<Articulo>();
-	}
+	@OneToMany(cascade=javax.persistence.CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name="CLIENTE_ARTICULO", joinColumns=@JoinColumn(name="CLIENTE_ID"), inverseJoinColumns=@JoinColumn(name="ARTICULO_ID"))
+	private List<Articulo> articulos = new ArrayList<Articulo>();
 	
 	public String getNombre() {
 		return nombre;
