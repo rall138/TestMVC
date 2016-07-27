@@ -8,18 +8,49 @@
      <h:form id="form">
 		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			
-        <p:dataTable id="tablaArticulos" var="articulo" value="#{clienteMB.selectedCliente.articulos}" >
-        	<p:column headerText="Id">
-        		<h:outputText value="#{articulo.id}" />
+        <p:dataTable id="tablaArticulos" var="articulo" 
+        	value="#{clienteMB.selectedCliente.articulos}" editable="true" 
+        	editMode="cell">
+        	
+			<f:facet name="header">
+				Articulos
+			</f:facet>
+        	
+        	<p:column headerText="Id" style="height:30px; width:30px">
+        		<p:cellEditor>
+        			<f:facet name="output" >
+        				<h:outputText value="#{articulo.id}" /></f:facet>
+        			<f:facet name="input" >
+        				<p:inputText value="#{articulo.id}" /></f:facet>
+        		</p:cellEditor>
         	</p:column>
+        	
         	<p:column headerText="Marca">
-        		<h:outputText value="#{articulo.marca}" />
+        		<p:cellEditor>
+        			<f:facet name="output" >
+        				<h:outputText value="#{articulo.marca}" /></f:facet>
+        			<f:facet name="input" >
+        				<p:inputText value="#{articulo.marca}" /></f:facet>
+        		</p:cellEditor>
         	</p:column>
+        	
         	<p:column headerText="Nombre">
-        		<h:outputText value="#{articulo.nombre}" />
+        		<p:cellEditor>
+        			<f:facet name="output" >
+        				<h:outputText value="#{articulo.nombre}" /></f:facet>
+        			<f:facet name="input" >
+        				<p:inputText value="#{articulo.nombre}" /></f:facet>
+        		</p:cellEditor>
         	</p:column>
+        	
         	<p:column headerText="Número de serie">
-        		<h:outputText value="#{articulo.numeroSerie}" />
+        		<p:cellEditor>
+        			<f:facet name="output" >
+        				<h:outputText value="#{articulo.numeroSerie}" /></f:facet>
+        			<f:facet name="input" >
+        				<p:inputText value="#{articulo.numeroSerie}" /></f:facet>
+        		</p:cellEditor>
+
         	</p:column>
 		</p:dataTable>
 	</h:form>

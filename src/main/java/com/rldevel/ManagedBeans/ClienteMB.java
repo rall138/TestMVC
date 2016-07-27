@@ -18,27 +18,25 @@ import com.rldevel.Services.ClienteService;
 @SessionScoped
 public class ClienteMB implements Serializable{
 
+	private static final long serialVersionUID = -5915349057842046942L;
+
 	@ManagedProperty(value="#{clienteservice}")	
 	private ClienteService clienteservice;
 		
-	private String filteredNombre;
-	private List<Cliente> clientes;
-	private Cliente selectedCliente;
-	private String mode;
+	private String filteredNombre = new String();
+	private List<Cliente> clientes = new ArrayList<Cliente>();
+	private Cliente selectedCliente = new Cliente();
+	private String mode = new String();
 	
-	public ClienteMB(){
-		clientes = new ArrayList<Cliente>();
-		selectedCliente = new Cliente();
-		mode = new String();
-		filteredNombre = new String();
-	}
+	public ClienteMB(){}
 	
 	public void clearCliente(){
 		selectedCliente = new Cliente();
 	}
 	
 	public List<Cliente> getClientes() {
-		return this.clienteservice.getItemCollection();
+		this.clientes = this.clienteservice.getItemCollection();
+		return this.clientes;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
@@ -88,11 +86,10 @@ public class ClienteMB implements Serializable{
 	}
 
 	private void insertCliente() {
-		System.out.println(this.selectedCliente.toString());
 		if (this.clienteservice.insert(this.selectedCliente)){
 			deployMessage("Cliente generado exitosamente");
 		}else{
-			deployMessage("Ha ocurrido un error al añadir el registro", 
+			deployMessage("Ha ocurrido un error al generar el registro", 
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}

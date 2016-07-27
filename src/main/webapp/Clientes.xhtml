@@ -6,8 +6,9 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    	<h:head>
+   	<h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet name="../resources/default.css" />
     </h:head>
     <h:body>
         <h:form id="form">
@@ -18,7 +19,14 @@
 	        	<f:setPropertyActionListener value="insert" target="#{clienteMB.mode}" />			
 			</p:commandButton>
     
-			<p:dataTable id="tablaClientes" var="cliente" value="#{clienteMB.clientes}" >
+			<p:dataTable id="tablaClientes" var="cliente" 
+				value="#{clienteMB.clientes}" style="width:80%; margin-top:10px"
+				selectionMode="single" selection="#{clienteMB.selectedCliente}" 
+				rowKey="#{cliente.id}">
+				
+				<f:facet name="header">
+					Datos de cliente
+				</f:facet>
 	        	<p:column headerText="Id">
 	        		<h:outputText value="#{cliente.id}" />
 	        	</p:column>
@@ -32,21 +40,23 @@
 	        		<h:outputText value="#{cliente.contacto}" />
 	        	</p:column>
 	        	
-	        	<p:column headerText="Modificar">
-	        		<p:commandButton update=":form:detailClienteAtributtes" title="Modificar" icon="ui-icon-pencil" 
-	        			oncomplete="PF('detailCliente').show()">
-						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" />
-	        			<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" />
-	        		</p:commandButton>
-	        	</p:column>
+<!-- 	        	<p:column headerText="Modificar"> -->
+<!-- 	        		<p:commandButton update=":form:detailClienteAtributtes"  -->
+<!-- 	        			title="Modificar" icon="ui-icon-pencil"  -->
+<!-- 	        			oncomplete="PF('detailCliente').show()" style="height:30px; width:30px"> -->
+<!-- 						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" /> -->
+<!-- 	        			<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" /> -->
+<!-- 	        		</p:commandButton> -->
+<!-- 	        	</p:column> -->
 
-	        	<p:column headerText="Eliminar">
-	        		<p:commandButton update=":form:detailClienteAtributtes" title="Modificar" icon="ui-icon-pencil" 
-	        			oncomplete="PF('detailCliente').show()">
-						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" />
-	        			<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" />
-	        		</p:commandButton>
-	        	</p:column>
+<!-- 	        	<p:column headerText="Eliminar"> -->
+<!-- 	        		<p:commandButton update=":form:detailClienteAtributtes"  -->
+<!-- 	        			title="Modificar" icon="ui-icon-pencil"  -->
+<!-- 	        			oncomplete="PF('detailCliente').show()" style="height:30px; width:30px"> -->
+<!-- 						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" /> -->
+<!-- 	        			<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" /> -->
+<!-- 	        		</p:commandButton> -->
+<!-- 	        	</p:column> -->
 	        	
 	        </p:dataTable>
     		
