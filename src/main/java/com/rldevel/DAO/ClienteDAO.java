@@ -1,5 +1,6 @@
 package com.rldevel.DAO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -17,7 +18,7 @@ import com.rldevel.Entities.Cliente;
 
 @Repository
 @Transactional
-public class ClienteDAO{
+public class ClienteDAO implements Serializable{
 
 	private SessionFactory sessionFactory;
 

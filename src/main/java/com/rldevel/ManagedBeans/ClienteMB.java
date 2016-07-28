@@ -10,7 +10,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.SelectEvent;
+
+import com.rldevel.Entities.Articulo;
 import com.rldevel.Entities.Cliente;
 import com.rldevel.Services.ClienteService;
 
@@ -79,9 +83,9 @@ public class ClienteMB implements Serializable{
 		if (mode.equalsIgnoreCase("insert")){
 			this.insertCliente();
 		}else if (mode.equalsIgnoreCase("update")){
-//			this.updateCliente();
-//		}else if (mode.equalsIgnoreCase("delete")){
-//			this.deleteCliente();
+			this.updateCliente();
+		}else if (mode.equalsIgnoreCase("delete")){
+			this.deleteCliente();
 		}
 	}
 
@@ -94,23 +98,23 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
-//	private void updateCliente() {
-//		if (this.clienteservice.update(this.selectedCliente)){
-//			deployMessage("Cliente actualizado con éxito");
-//		}else{
-//			deployMessage("Ha ocurrido un error al actualizar el registro", 
-//					FacesMessage.SEVERITY_ERROR);
-//		}
-//	}
-//
-//	private void deleteCliente() {
-//		if (this.clienteservice.delete(this.selectedCliente)){
-//			deployMessage("Cliente eliminado con éxito");
-//		}else{
-//			deployMessage("Ha ocurrido un error al eliminar el registro", 
-//					FacesMessage.SEVERITY_ERROR);
-//		}
-//	}
+	private void updateCliente() {
+		if (this.clienteservice.update(this.selectedCliente)){
+			deployMessage("Cliente actualizado con éxito");
+		}else{
+			deployMessage("Ha ocurrido un error al actualizar el registro", 
+					FacesMessage.SEVERITY_ERROR);
+		}
+	}
+
+	private void deleteCliente() {
+		if (this.clienteservice.delete(this.selectedCliente)){
+			deployMessage("Cliente eliminado con éxito");
+		}else{
+			deployMessage("Ha ocurrido un error al eliminar el registro", 
+					FacesMessage.SEVERITY_ERROR);
+		}
+	}
 
 	private void deployMessage(String strMessage){
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -125,6 +129,11 @@ public class ClienteMB implements Serializable{
 		context.addMessage(null, message);
 	}
 
+	public void seleccionFila(SelectEvent event){
+		this.setSelectedCliente((Cliente)event.getObject());
+	}
 	
-	
+	public void agregarRegistro(ActionEvent event){
+		this.getSelectedCliente().getArticulos().add(new Articulo());
+	}
 }

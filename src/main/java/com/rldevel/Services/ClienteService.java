@@ -30,7 +30,7 @@ public class ClienteService implements Serializable{
 
 	
 	public boolean insert(Cliente cliente) {
-		
+		cliente.getArticulos().clear();
 		//Prueba
 		Articulo art1, art2, art3;
 		art1 = new Articulo();
@@ -52,6 +52,14 @@ public class ClienteService implements Serializable{
 		cliente.getArticulos().add(art2);
 		cliente.getArticulos().add(art3);
 		return this.getClientedao().insert(cliente);
+	}
+	
+	public boolean update(Cliente cliente){
+		return this.getClientedao().update(cliente);
+	}
+	
+	public boolean delete(Cliente cliente){
+		return this.getClientedao().delete(cliente);
 	}
 
 	public List<Cliente> getItemCollection() {

@@ -14,6 +14,29 @@
         <h:form id="form">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			
+			<!-- OPCIONES DE MENU -->
+			<p:contextMenu for="tablaClientes" widgetVar="cMenu">   
+		       
+		       <p:menuitem value="Editar registro" icon="ui-icon-pencil" 
+		       		onclick="PF('detailCliente').show();"/>  
+		       
+		       <p:menuitem value="Eliminar registro" icon="ui-icon-close" 
+		       		actionListener="#{clienteMB.dialogConfirm}" update=":form:tablaClientes">
+		       		<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" />
+			       	<p:confirm header="Confirmation" message="Estas seguro/a de eliminar el registro?" 
+			       		 icon="ui-icon-alert" />
+		       </p:menuitem>
+		       
+		       <p:menuitem value="Cerrar menú" onclick="PF(cMenu).hide()" icon="ui-icon-circle-close"/>
+		   </p:contextMenu>
+			
+			<!-- DIALOGO DE CONFIRMACION -->		   
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		        <p:commandButton value="Yes" type="button" 
+		        	styleClass="ui-confirmdialog-yes" icon="ui-icon-check"  />
+		        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		    </p:confirmDialog>
+			
 			<p:commandButton id="newCliente" update=":form:detailClienteAtributtes" value="Agregar" icon="ui-icon-plus" 
 				oncomplete="PF('detailCliente').show()" actionListener="#{clienteMB.clearCliente}" >
 	        	<f:setPropertyActionListener value="insert" target="#{clienteMB.mode}" />			
@@ -21,8 +44,11 @@
     
 			<p:dataTable id="tablaClientes" var="cliente" 
 				value="#{clienteMB.clientes}" style="width:80%; margin-top:10px"
-				selectionMode="single" selection="#{clienteMB.selectedCliente}" 
+				selectionMode="single" selection="#{clienteMB.selectedCliente}"  
 				rowKey="#{cliente.id}">
+				
+				 <p:ajax event="rowSelect" listener="#{clienteMB.seleccionFila}" 
+				 	update=":form:detailClienteAtributtes"/>
 				
 				<f:facet name="header">
 					Datos de cliente
@@ -39,24 +65,6 @@
 	        	<p:column headerText="Contacto">
 	        		<h:outputText value="#{cliente.contacto}" />
 	        	</p:column>
-	        	
-<!-- 	        	<p:column headerText="Modificar"> -->
-<!-- 	        		<p:commandButton update=":form:detailClienteAtributtes"  -->
-<!-- 	        			title="Modificar" icon="ui-icon-pencil"  -->
-<!-- 	        			oncomplete="PF('detailCliente').show()" style="height:30px; width:30px"> -->
-<!-- 						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" /> -->
-<!-- 	        			<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" /> -->
-<!-- 	        		</p:commandButton> -->
-<!-- 	        	</p:column> -->
-
-<!-- 	        	<p:column headerText="Eliminar"> -->
-<!-- 	        		<p:commandButton update=":form:detailClienteAtributtes"  -->
-<!-- 	        			title="Modificar" icon="ui-icon-pencil"  -->
-<!-- 	        			oncomplete="PF('detailCliente').show()" style="height:30px; width:30px"> -->
-<!-- 						<f:setPropertyActionListener value="#{cliente}" target="#{clienteMB.selectedCliente}" /> -->
-<!-- 	        			<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" /> -->
-<!-- 	        		</p:commandButton> -->
-<!-- 	        	</p:column> -->
 	        	
 	        </p:dataTable>
     		
@@ -81,11 +89,9 @@
 			        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
 			        				readonly="#{clienteMB.mode == 'delete'}" />
 		
-								<p:panelGrid columns="2" >
-				        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{clienteMB.dialogConfirm}" 
-				        				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" />
-				        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailCliente').hide()" />
-				        		</p:panelGrid>
+			        			<p:commandButton title="Confirmar" value="Confirmar" actionListener="#{clienteMB.dialogConfirm}" 
+			        				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" />
+			        			<p:commandButton title="Cancelar" value="Cancelar" oncomplete="PF('detailCliente').hide()" />
 		
 			        		</p:panelGrid>
 		        		</p:tab>

@@ -15,6 +15,12 @@
 			<f:facet name="header">
 				Articulos
 			</f:facet>
+			
+			<f:facet name="footer">
+				<p:commandLink actionListener="#{clienteMB.agregarRegistro}" ajax="true">
+        			<h:outputText value="[+ Agregar registro]" />
+    			</p:commandLink>
+			</f:facet>
         	
         	<p:column headerText="Id" style="height:30px; width:30px">
         		<p:cellEditor>
