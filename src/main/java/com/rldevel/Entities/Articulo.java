@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +37,10 @@ public class Articulo implements Serializable{
 	@Column(name="COMENTARIO")
 	private String comentario;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="CLIENTE_ID", nullable=false)
+	private Cliente cliente;
+	
 	public Articulo(){}
 	
 	public Articulo(String marca, String nombre, String numeroSerie, 
@@ -47,6 +54,10 @@ public class Articulo implements Serializable{
 		
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getMarca() {
@@ -78,5 +89,13 @@ public class Articulo implements Serializable{
 	}
 	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }

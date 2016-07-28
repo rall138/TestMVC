@@ -29,13 +29,20 @@ public class ClienteMB implements Serializable{
 		
 	private String filteredNombre = new String();
 	private List<Cliente> clientes = new ArrayList<Cliente>();
+	private List<Articulo> articulos_auxiliares = new ArrayList<Articulo>();
+	
+	//Articulos para eliminar
+	private List<Articulo> articulos_eliminar = new ArrayList<Articulo>();
+	
 	private Cliente selectedCliente = new Cliente();
+	private Articulo selectedArticulo = new Articulo();
 	private String mode = new String();
 	
 	public ClienteMB(){}
 	
 	public void clearCliente(){
-		selectedCliente = new Cliente();
+		this.setSelectedCliente(new Cliente());
+		articulos_auxiliares = this.getSelectedCliente().getArticulos();
 	}
 	
 	public List<Cliente> getClientes() {
@@ -53,6 +60,8 @@ public class ClienteMB implements Serializable{
 
 	public void setSelectedCliente(Cliente selectedCliente) {
 		this.selectedCliente = selectedCliente;
+		if (this.selectedCliente != null)
+			this.articulos_auxiliares = selectedCliente.getArticulos();
 	}
 
 	public String getMode() {
@@ -78,6 +87,39 @@ public class ClienteMB implements Serializable{
 	public void setClienteservice(ClienteService clienteservice) {
 		this.clienteservice = clienteservice;
 	}
+	
+	public List<Articulo> getArticulos_auxiliares() {
+		return articulos_auxiliares;
+	}
+
+	public void setArticulos_auxiliares(List<Articulo> articulos_auxiliares) {
+		this.articulos_auxiliares = articulos_auxiliares;
+	}
+	
+	public Articulo getSelectedArticulo() {
+		return selectedArticulo;
+	}
+
+	public void setSelectedArticulo(Articulo selectedArticulo) {
+		this.selectedArticulo = selectedArticulo;
+	}
+	
+	public List<Articulo> getArticulos_eliminar() {
+		return articulos_eliminar;
+	}
+
+	public void setArticulos_eliminar(List<Articulo> articulos_eliminar) {
+		this.articulos_eliminar = articulos_eliminar;
+	}
+
+	public boolean isArticuloReadyForDelete(Articulo articulo) {
+		for (Articulo art: articulos_eliminar){
+			if (art.getId()==articulo.getId()){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void dialogConfirm(){
 		if (mode.equalsIgnoreCase("insert")){
@@ -99,17 +141,20 @@ public class ClienteMB implements Serializable{
 	}
 	
 	private void updateCliente() {
+		this.removeArticulos();
+		this.selectedCliente.setArticulos(articulos_auxiliares);
 		if (this.clienteservice.update(this.selectedCliente)){
-			deployMessage("Cliente actualizado con éxito");
+			deployMessage("Cliente actualizado exitosamente");
 		}else{
 			deployMessage("Ha ocurrido un error al actualizar el registro", 
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}
 
-	private void deleteCliente() {
+	public void deleteCliente() {
+		this.selectedCliente.setArticulos(articulos_auxiliares);		
 		if (this.clienteservice.delete(this.selectedCliente)){
-			deployMessage("Cliente eliminado con éxito");
+			deployMessage("Cliente eliminado exitosamente");
 		}else{
 			deployMessage("Ha ocurrido un error al eliminar el registro", 
 					FacesMessage.SEVERITY_ERROR);
@@ -119,6 +164,7 @@ public class ClienteMB implements Serializable{
 	private void deployMessage(String strMessage){
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(strMessage);
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		context.addMessage(null, message);
 	}
 	
@@ -134,6 +180,19 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void agregarRegistro(ActionEvent event){
-		this.getSelectedCliente().getArticulos().add(new Articulo());
+		Articulo auxiliar = new Articulo();
+		auxiliar.setCliente(this.selectedCliente);
+		this.articulos_auxiliares.add(auxiliar);
 	}
+	
+	public void markArticuloForDelete(Articulo articulo){
+		if (!isArticuloReadyForDelete(articulo)){
+			this.articulos_eliminar.add(articulo);
+		}
+	}
+	
+	private void removeArticulos(){
+		this.articulos_auxiliares.removeAll(this.articulos_eliminar);
+	}
+
 }

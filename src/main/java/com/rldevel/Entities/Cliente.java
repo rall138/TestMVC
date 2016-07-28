@@ -8,11 +8,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name="CLIENTE")
@@ -20,9 +22,6 @@ public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 8992605351560091859L;
 
-	@Id
-	@Column(name="ID")
-	@GeneratedValue
 	private int id;
 	
 	@Column(name="NOMBRE")
@@ -34,9 +33,13 @@ public class Cliente implements Serializable{
 	@Column(name="CONTACTO")
 	private String contacto;
 
-	@OneToMany(cascade=javax.persistence.CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinTable(name="CLIENTE_ARTICULO", joinColumns=@JoinColumn(name="CLIENTE_ID"), inverseJoinColumns=@JoinColumn(name="ARTICULO_ID"))
 	private List<Articulo> articulos = new ArrayList<Articulo>();
+	
+	public Cliente(){
+		this.nombre = "";
+		this.telefono = "";
+		this.contacto = "";
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -62,10 +65,19 @@ public class Cliente implements Serializable{
 		this.contacto = contacto;
 	}
 
+	@Id
+	@Column(name="ID", unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
 
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")
+	@Cascade(CascadeType.ALL)
 	public List<Articulo> getArticulos() {
 		return articulos;
 	}
