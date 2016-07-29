@@ -186,6 +186,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void markArticuloForDelete(Articulo articulo){
+		System.out.println("Articulo marcado para eliminar: "+articulo.getNombre());
 		if (!isArticuloReadyForDelete(articulo)){
 			this.articulos_eliminar.add(articulo);
 		}

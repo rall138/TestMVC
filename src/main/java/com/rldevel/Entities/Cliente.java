@@ -76,7 +76,7 @@ public class Cliente implements Serializable{
 		this.id = id;
 	}
 
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente", orphanRemoval=true)
 	@Cascade(CascadeType.ALL)
 	public List<Articulo> getArticulos() {
 		return articulos;
