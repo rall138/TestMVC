@@ -1,5 +1,6 @@
 @CHARSET "ISO-8859-1";
 
 .ui-widget, .ui-widget .ui-widget {
-    font-size: 12;
+    font-size: 12px;
+    padding: 3px 10px;
 }

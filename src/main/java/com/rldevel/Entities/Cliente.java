@@ -15,9 +15,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @Table(name="CLIENTE")
+@NamedQueries({
+	@NamedQuery(name="ClienteByName", query="from Cliente where nombre LIKE :nombre")
+})
 public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 8992605351560091859L;

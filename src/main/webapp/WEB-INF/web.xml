@@ -17,7 +17,7 @@
   
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>hot-sneaks</param-value>
+    <param-value>excite-bike</param-value>
   </context-param>
   
   <!-- JSF Mapping -->
@@ -52,5 +52,5 @@
    <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
-    
+
 </web-app>

@@ -26,10 +26,20 @@ public class ClienteMB implements Serializable{
 
 	@ManagedProperty(value="#{clienteservice}")	
 	private ClienteService clienteservice;
-		
-	private String filteredNombre = new String();
+	
+	//**** Comienzo de seccion de filtros ****
+	
+	private String filteredNombre = new String();	
+
+	//**** Fin de seccion de filtros ****	
+
+	
+	//**** Colecciones manejadas en data-tables ****
+	
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 	private List<Articulo> articulos_auxiliares = new ArrayList<Articulo>();
+	
+	//**** Colecciones manejadas en data-tables ****	
 	
 	//Articulos para eliminar
 	private List<Articulo> articulos_eliminar = new ArrayList<Articulo>();
@@ -46,7 +56,11 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public List<Cliente> getClientes() {
-		this.clientes = this.clienteservice.getItemCollection();
+		if (this.filteredNombre.isEmpty()){
+			this.clientes = this.clienteservice.getItemCollection();
+		}else{
+			this.clientes = this.clienteservice.getItemCollection(this.filteredNombre);
+		}
 		return this.clientes;
 	}
 
@@ -186,14 +200,14 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void markArticuloForDelete(Articulo articulo){
-		System.out.println("Articulo marcado para eliminar: "+articulo.getNombre());
 		if (!isArticuloReadyForDelete(articulo)){
 			this.articulos_eliminar.add(articulo);
+			articulo.setReadyForDelete(true);
 		}
 	}
 	
 	private void removeArticulos(){
 		this.articulos_auxiliares.removeAll(this.articulos_eliminar);
 	}
-
+	
 }

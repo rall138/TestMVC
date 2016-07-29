@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="ARTICULO")
@@ -40,6 +41,9 @@ public class Articulo implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="CLIENTE_ID", nullable=false)
 	private Cliente cliente;
+	
+	@Transient
+	private boolean readyForDelete = false;
 	
 	public Articulo(){}
 	
@@ -98,4 +102,13 @@ public class Articulo implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	public boolean isReadyForDelete() {
+		return readyForDelete;
+	}
+
+	public void setReadyForDelete(boolean readyForDelete) {
+		this.readyForDelete = readyForDelete;
+	}
+	
 }

@@ -43,4 +43,8 @@ public class ClienteService implements Serializable{
 		return this.clientedao.getItemCollection();
 	}
 	
+	public List<Cliente> getItemCollection(Object... criteria){
+		return this.clientedao.getItemCollection(criteria);
+	}
+	
 }

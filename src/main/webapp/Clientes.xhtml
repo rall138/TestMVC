@@ -8,120 +8,141 @@
 
    	<h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet name="../resources/default.css" />
     </h:head>
-    <h:body>
-        <h:form id="form" style="margin-left:10%; margin-right:10%">
-			<p:messages id="messages" autoUpdate="true" closable="true" 
-				globalOnly="true" redisplay="false"/>
-			
-			<!-- OPCIONES DE MENU -->
-			<p:contextMenu for="tablaClientes" widgetVar="cMenu">   
-		       
-		       <p:menuitem value="Editar registro" icon="ui-icon-pencil" 
-		       		onclick="PF('detailCliente').show();">
-		       		<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" />
-	       		</p:menuitem>
-		       
-		       <p:menuitem value="Eliminar registro" icon="ui-icon-close" update=":form:tablaClientes"
-	       			actionListener="#{clienteMB.deleteCliente}" >
-		       		
-<!-- 		       		<f:setPropertyActionListener value="delete" target="#{clienteMB.mode}" /> -->
 
-			       	<p:confirm header="Confirmation" 
-			       		message="Estas seguro/a de eliminar el registro?" 
-			       		icon="ui-icon-alert" />
+	    <h:body>
+	    	<f:facet name="last">
+        		<h:outputStylesheet name="default.css" />
+        	</f:facet>
+	    
+	        <h:form id="form" style="margin-left:10%; margin-right:10%">
+				<p:messages id="messages" autoUpdate="true" closable="true" 
+					globalOnly="true" redisplay="false"/>
+				
+				<!-- OPCIONES DE MENU -->
+				<p:contextMenu for="tablaClientes" widgetVar="cMenu">   
+			       
+			       <p:menuitem value="Editar registro" icon="ui-icon-pencil" 
+			       		onclick="PF('detailCliente').show();">
+			       		<f:setPropertyActionListener value="update" target="#{clienteMB.mode}" />
+		       		</p:menuitem>
+			       
+			       <p:menuitem value="Eliminar registro" icon="ui-icon-close" update=":form:tablaClientes"
+		       			actionListener="#{clienteMB.deleteCliente}" >
 			       		
-		       </p:menuitem>
-		       
-		       <p:menuitem value="Cerrar menú" onclick="PF(cMenu).hide()" icon="ui-icon-circle-close"/>
-		   </p:contextMenu>
-			
-			<!-- DIALOGO DE CONFIRMACION -->		   
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-		        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-		        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		    </p:confirmDialog>
-			
-			<p:commandButton id="newCliente" update=":formDialog:detailClienteAtributtes" value="Agregar" 
-				icon="ui-icon-plus" oncomplete="PF('detailCliente').show()" actionListener="#{clienteMB.clearCliente}" >
-	        	<f:setPropertyActionListener value="insert" target="#{clienteMB.mode}" />
-			</p:commandButton>
-    
-			<p:dataTable id="tablaClientes" var="cliente" 
-				value="#{clienteMB.clientes}" style="margin-top:10px"
-				selectionMode="single" selection="#{clienteMB.selectedCliente}"  
-				rowKey="#{cliente.id}">
-				
-				 <p:ajax event="rowSelect" listener="#{clienteMB.seleccionFila}" 
-				 	update=":formDialog:detailClienteAtributtes"/>
-				
-				<f:facet name="header">
-					Datos de cliente
-				</f:facet>
-	        	<p:column headerText="Id">
-	        		<h:outputText value="#{cliente.id}" />
-	        	</p:column>
-	        	<p:column headerText="Nombre">
-	        		<h:outputText value="#{cliente.nombre}" />
-	        	</p:column>
-	        	<p:column headerText="Teléfono">
-	        		<h:outputText value="#{cliente.telefono}" />
-	        	</p:column>
-	        	<p:column headerText="Contacto">
-	        		<h:outputText value="#{cliente.contacto}" />
-	        	</p:column>
-	        	
-	        </p:dataTable>
-    
-	    </h:form>
-	    
-	    <h:form id="formDialog">
-	    
-	        <!-- REGISTER DIALOG -->
-	        <p:dialog header="Detalle de cliente " 
-	        		widgetVar="detailCliente" modal="true" showEffect="fade" resizable="false">
-	        		
-	        	<p:outputPanel id="detailClienteAtributtes">
-	        		<p:tabView>
-	        			<p:tab id="tabGeneral" title="Datos generales">
-			        		<p:panelGrid columns="2" >
-		
-			        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
-			        			<p:inputText id="txtNombre" value="#{clienteMB.selectedCliente.nombre}" 
-			        				readonly="#{clienteMB.mode == 'delete'}" />
-			        			
-			        			<h:outputLabel id="lblTelefono" for="txtTelefono" value="Teléfono" />
-			        			<p:inputText id="txtTelefono" value="#{clienteMB.selectedCliente.telefono}" 
-			        				readonly="#{clienteMB.mode == 'delete'}" />
-		
-			        			<h:outputLabel id="lblContacto" for="txtContacto" value="Contacto" />
-			        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
-			        				readonly="#{clienteMB.mode == 'delete'}" />
-		
-		
-			        		</p:panelGrid>
-		        		</p:tab>
-		        		<p:tab id="tabArticulos" title="Articulos">
-							<ui:include src="ArticulosDataTable.xhtml" />
-		        		</p:tab>
-					</p:tabView>
 	
-					<!-- COMANDOS DE CONFIRMACION -->
-	       			<p:commandButton title="Confirmar" value="Confirmar" 
-	       				actionListener="#{clienteMB.dialogConfirm}" 
-	       				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" >
-	      				</p:commandButton>
-	      				
-	       			<p:commandButton title="Cancelar" value="Cancelar" 
-	       				oncomplete="PF('detailCliente').hide()" >
-	       				<f:setPropertyActionListener value="" target="#{clienteMB.mode}" />
-	      				</p:commandButton>
-						        		
-	        	</p:outputPanel>
-	        	
-	        </p:dialog>
-	     </h:form>
-    </h:body>
-    
+				       	<p:confirm header="Confirmation" 
+				       		message="Estas seguro/a de eliminar el registro?" 
+				       		icon="ui-icon-alert" />
+				       		
+			       </p:menuitem>
+			       
+			       <p:menuitem value="Cerrar menú" onclick="PF(cMenu).hide()" icon="ui-icon-circle-close"/>
+			   </p:contextMenu>
+				
+				<!-- DIALOGO DE CONFIRMACION -->		   
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
+
+				<p:panel header="Filtros" toggleable="true" 
+					toggleOrientation="vertical" style="margin-bottom:10px" >
+					
+					<p:panelGrid columns="3">
+						<h:outputLabel id="txtFilteredNombre" for="filteredNombre" value="Nombre de cliente" />
+						<p:inputText id="filteredNombre" value="#{clienteMB.filteredNombre}" />
+						<p:commandButton title="Filtrar" value="Filtrar" ajax="true" 
+							update="tablaClientes">
+						</p:commandButton>
+					</p:panelGrid>
+
+				</p:panel>
+				
+				<p:panel header="Clientes data">
+				
+					<p:spacer width="80%" height="0" />
+					
+					<p:commandButton id="newCliente" update=":formDialog:detailClienteAtributtes" value="Nuevo" 
+						icon="ui-icon-plus" oncomplete="PF('detailCliente').show()" actionListener="#{clienteMB.clearCliente}" >
+			        	<f:setPropertyActionListener value="insert" target="#{clienteMB.mode}" />
+					</p:commandButton>
+		    		
+					<p:dataTable id="tablaClientes" var="cliente" 
+						value="#{clienteMB.clientes}" style="margin-top:10px"
+						selectionMode="single" selection="#{clienteMB.selectedCliente}"  
+						rowKey="#{cliente.id}">
+						
+						 <p:ajax event="rowSelect" listener="#{clienteMB.seleccionFila}" 
+						 	update=":formDialog:detailClienteAtributtes"/>
+						
+						<f:facet name="header">
+							Datos de cliente
+						</f:facet>
+			        	<p:column headerText="Id">
+			        		<h:outputText value="#{cliente.id}" />
+			        	</p:column>
+			        	<p:column headerText="Nombre">
+			        		<h:outputText value="#{cliente.nombre}" />
+			        	</p:column>
+			        	<p:column headerText="Teléfono">
+			        		<h:outputText value="#{cliente.telefono}" />
+			        	</p:column>
+			        	<p:column headerText="Contacto">
+			        		<h:outputText value="#{cliente.contacto}" />
+			        	</p:column>
+			        	
+			        </p:dataTable>
+		        </p:panel>
+		        		    
+		    </h:form>
+		    
+		    <h:form id="formDialog">
+		    
+		        <!-- REGISTER DIALOG -->
+		        <p:dialog header="Detalle de cliente " 
+		        		widgetVar="detailCliente" modal="true" showEffect="fade" resizable="false">
+		        		
+		        	<p:outputPanel id="detailClienteAtributtes">
+		        		<p:tabView>
+		        			<p:tab id="tabGeneral" title="Datos generales">
+				        		<p:panelGrid columns="2" >
+			
+				        			<h:outputLabel id="lblNombre" for="txtNombre" value="Nombre" />
+				        			<p:inputText id="txtNombre" value="#{clienteMB.selectedCliente.nombre}" 
+				        				readonly="#{clienteMB.mode == 'delete'}" />
+				        			
+				        			<h:outputLabel id="lblTelefono" for="txtTelefono" value="Teléfono" />
+				        			<p:inputText id="txtTelefono" value="#{clienteMB.selectedCliente.telefono}" 
+				        				readonly="#{clienteMB.mode == 'delete'}" />
+			
+				        			<h:outputLabel id="lblContacto" for="txtContacto" value="Contacto" />
+				        			<p:inputText id="txtContacto" value="#{clienteMB.selectedCliente.contacto}" 
+				        				readonly="#{clienteMB.mode == 'delete'}" />
+			
+			
+				        		</p:panelGrid>
+			        		</p:tab>
+			        		<p:tab id="tabArticulos" title="Articulos">
+								<ui:include src="ArticulosDataTable.xhtml" />
+			        		</p:tab>
+						</p:tabView>
+		
+						<!-- COMANDOS DE CONFIRMACION -->
+		       			<p:commandButton title="Confirmar" value="Confirmar" 
+		       				actionListener="#{clienteMB.dialogConfirm}" 
+		       				update=":form:tablaClientes" oncomplete="PF('detailCliente').hide()" >
+		      				</p:commandButton>
+		      				
+		       			<p:commandButton title="Cancelar" value="Cancelar" 
+		       				oncomplete="PF('detailCliente').hide()" >
+		       				<f:setPropertyActionListener value="" target="#{clienteMB.mode}" />
+		      				</p:commandButton>
+							        		
+		        	</p:outputPanel>
+		        	
+		        </p:dialog>
+		     </h:form>
+    	</h:body>
+   
 </html>

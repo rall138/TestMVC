@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.rldevel.DAO.Interfaces.ICommonDAO;
-import com.rldevel.Entities.Articulo;
 import com.rldevel.Entities.Cliente;
 
 @Repository
 @Transactional
 public class ClienteDAO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private SessionFactory sessionFactory;
 
@@ -61,14 +57,15 @@ public class ClienteDAO implements Serializable{
 		return true;
 	}
 	
-	
+	@SuppressWarnings("unchecked")	
 	public List<Cliente> getItemCollection(){
 		return this.getSessionFactory().getCurrentSession().createQuery("from Cliente").list();
 	}
 	
-
+	@SuppressWarnings("unchecked")
 	public List<Cliente> getItemCollection(Object... criteria){
-			return this.getSessionFactory().getCurrentSession().createCriteria(Cliente.class)
-			.add(Restrictions.like("nombre", criteria[0].toString())).list();
+		return this.getSessionFactory().getCurrentSession()
+				.getNamedQuery("ClienteByName").setString("nombre", "%"+criteria[0].toString()+"%")
+				.list();
 	}
 }

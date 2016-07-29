@@ -20,37 +20,45 @@
 		</f:facet>
 	     
     	<p:column headerText="Id">
-    		<h:outputText value="#{articulo.id}" />
+    		<h:outputText rendered="#{not articulo.readyForDelete}" value="#{articulo.id}" />
+    		<h:outputText rendered="#{articulo.readyForDelete}" value="#{articulo.id}" 
+    			style="text-decoration: line-through;"/>
      	</p:column>
      		      	
       	<p:column headerText="Marca">
-      		<p:cellEditor>
+      		<p:cellEditor rendered="#{not articulo.readyForDelete}">
       			<f:facet name="output" ><h:outputText value="#{articulo.marca}"/></f:facet>
       			<f:facet name="input" ><p:inputText value="#{articulo.marca}"/></f:facet>
       		</p:cellEditor>
+      		<h:outputText rendered="#{articulo.readyForDelete}" value="#{articulo.marca}"
+      			style="text-decoration: line-through;"/>
       	</p:column>
       	
       	<p:column headerText="Nombre">
-      		<p:cellEditor>
+      		<p:cellEditor rendered="#{not articulo.readyForDelete}">
       			<f:facet name="output" >
       				<h:outputText value="#{articulo.nombre}" /></f:facet>
       			<f:facet name="input" >
       				<p:inputText value="#{articulo.nombre}" /></f:facet>
       		</p:cellEditor>
+			<h:outputText rendered="#{articulo.readyForDelete}" value="#{articulo.nombre}"
+				style="text-decoration: line-through;"/>      		
       	</p:column>
       	
       	<p:column headerText="Número de serie">
-      		<p:cellEditor>
+      		<p:cellEditor rendered="#{not articulo.readyForDelete}">
       			<f:facet name="output" >
       				<h:outputText value="#{articulo.numeroSerie}" /></f:facet>
       			<f:facet name="input" >
       				<p:inputText value="#{articulo.numeroSerie}" /></f:facet>
       		</p:cellEditor>
-
+			<h:outputText rendered="#{articulo.readyForDelete}" value="#{articulo.numeroSerie}"
+				style="text-decoration: line-through;"/>
       	</p:column>
       	
-      	<p:column headerText="Eliminar">
-			<p:commandButton icon="ui-icon-close" action="#{clienteMB.markArticuloForDelete(articulo)}" 
+      	<p:column headerText="Eliminar" rendered="#{not articulo.readyForDelete}">
+			<p:commandButton icon="ui-icon-close" 
+				action="#{clienteMB.markArticuloForDelete(articulo)}" 
 				update="tablaArticulos" >
 			</p:commandButton>
       	</p:column>

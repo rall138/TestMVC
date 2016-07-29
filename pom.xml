@@ -149,35 +149,4 @@
 		</dependency>  		
   		
   </dependencies>
-  <!-- 
- <build>
- 	<plugins>
-          <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-compiler-plugin</artifactId>
-               <version>2.3.2</version>
-               <configuration>
-                   <source>1.6</source>
-                   <target>1.6</target>
-               </configuration>
-           </plugin>
-
-			<plugin>
-                <groupId>org.codeartisans.asadmin</groupId>
-                <artifactId>asadmin-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <glassfishHome>/usr/local/Servers/glassfish4</glassfishHome>
-                    <domain>domain1</domain>
-                    <host>localhost</host>
-                    <port>4848</port>
-                    <user>admin</user>
-                    <passwordfile>~/.asadmintruststore</passwordfile>
-                    <appArchive>${project.build.directory}/${project.build.finalName}.${project.artifact.artifactHandler.extension}</appArchive>
-                    <contextRoot>monitor.war</contextRoot>
-                </configuration>
-            </plugin>           
- 	</plugins>
- </build> -->
-   
 </project>
